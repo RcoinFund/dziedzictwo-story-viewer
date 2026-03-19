@@ -4,7 +4,8 @@
     --card-border: rgba(255, 255, 255, 0.08);
     --text-main: #f3f4f6;
     --text-muted: #9ca3af;
-    --accent-color: #e11d48; /* Crimson red for dramatic feel */
+    --accent-color: #e11d48;
+    /* Crimson red for dramatic feel */
     --accent-glow: rgba(225, 29, 72, 0.5);
     --font-heading: 'Playfair Display', serif;
     --font-body: 'Inter', sans-serif;
@@ -48,7 +49,8 @@ body {
 .orb-1 {
     width: 40vw;
     height: 40vw;
-    background: rgba(225, 29, 72, 0.15); /* Soft crimson */
+    background: rgba(225, 29, 72, 0.15);
+    /* Soft crimson */
     top: -10%;
     left: -10%;
 }
@@ -56,7 +58,8 @@ body {
 .orb-2 {
     width: 50vw;
     height: 50vw;
-    background: rgba(88, 28, 135, 0.15); /* Deep purple */
+    background: rgba(88, 28, 135, 0.15);
+    /* Deep purple */
     bottom: -20%;
     right: -10%;
     animation-delay: -5s;
@@ -65,22 +68,37 @@ body {
 .orb-3 {
     width: 30vw;
     height: 30vw;
-    background: rgba(185, 28, 28, 0.1); 
+    background: rgba(185, 28, 28, 0.1);
     top: 40%;
     left: 50%;
     animation-duration: 25s;
 }
 
 @keyframes float {
-    0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(5%, 10%) scale(1.1); }
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(5%, 10%) scale(1.1);
+    }
 }
 
 /* Layout Container */
+html,
+body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
 .container {
+    position: relative;
+    /* Anchor for absolute timeline */
     max-width: 900px;
     margin: 0 auto;
     padding: 4rem 2rem;
+    padding-right: 120px;
+    /* Space for the episode timeline */
 }
 
 /* Header */
@@ -136,7 +154,8 @@ header .subtitle {
 .phase-header::before {
     content: '';
     position: absolute;
-    left: -3rem; /* Align with border-left */
+    left: -3rem;
+    /* Align with border-left */
     top: 50%;
     transform: translate(-50%, -50%);
     width: 20px;
@@ -232,10 +251,17 @@ header .subtitle {
 .fade-in {
     animation: fadeIn 1s ease-out forwards;
 }
-.delays-1 { animation-delay: 0.3s; opacity: 0; }
+
+.delays-1 {
+    animation-delay: 0.3s;
+    opacity: 0;
+}
 
 @keyframes fadeIn {
-    to { opacity: 1; transform: translateY(0); }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Footer */
@@ -248,11 +274,88 @@ footer {
     font-size: 0.9rem;
 }
 
+/* Episode Timeline Side (No internal scroll) */
+/* Episode Timeline Side (Dynamic) */
+#episode-timeline {
+    position: fixed;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 70vh;
+    width: 60px;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.marker-group {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.marker-group.visible {
+    opacity: 1;
+}
+
+.ep-marker {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    opacity: 0.6;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    text-align: right;
+    font-family: var(--font-body);
+}
+
+.ep-marker.glowing {
+    color: #fff !important;
+    opacity: 1 !important;
+    text-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
+    transform: scale(1.1);
+    font-weight: 700;
+}
+
 /* Responsiveness */
+@media (max-width: 1100px) {
+    .container {
+        padding-right: 2rem;
+    }
+
+    #episode-timeline {
+        display: none;
+        /* Hide sidebar on small screens to avoid clutter */
+    }
+}
+
 @media (max-width: 768px) {
-    header h1 { font-size: 3rem; }
-    .phase-section { border-left: none; padding-left: 0; }
-    .phase-header::before { display: none; }
-    .phase-title { font-size: 1.8rem; text-align: center; display: block; }
-    .phase-header { border-bottom: 2px solid var(--accent-color); padding-bottom: 1rem; }
+    header h1 {
+        font-size: 3rem;
+    }
+
+    .phase-section {
+        border-left: none;
+        padding-left: 0;
+    }
+
+    .phase-header::before {
+        display: none;
+    }
+
+    .phase-title {
+        font-size: 1.8rem;
+        text-align: center;
+        display: block;
+    }
+
+    .phase-header {
+        border-bottom: 2px solid var(--accent-color);
+        padding-bottom: 1rem;
+    }
 }

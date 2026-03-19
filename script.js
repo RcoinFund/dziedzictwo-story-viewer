@@ -1,101 +1,160 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // The raw data from the summary
+
+    // The data mapping events to episode numbers
     const phasesData = [
         {
             title: "Faza 1: Ucieczka, poszukiwanie prawdy i intrygi Canan",
             events: [
-                "[cite_start]Po postrzeleniu Yamana, zdesperowana Seher ucieka z Yusufem i żyją w biedzie, walcząc o przetrwanie[cite: 3075, 3082].",
-                "[cite_start]Yaman ich odnajduje i zmusza do powrotu, jednak Seher nienawidzi go, myśląc, że jest mordercą jej siostry[cite: 3023, 3067, 3070].",
-                "[cite_start]Wkrótce wychodzi na jaw, że Yaman jest niewinny, a za śmierć Kevser odpowiada Ikbal oraz sfałszowany przez lekarkę raport[cite: 3015, 3016, 3024].",
-                "[cite_start]W życiu Yamana pojawia się jego matka, Canan, która potajemnie współpracuje z lekarzem i fałszuje historię swojej choroby, by wzbudzić litość i przejąć majątek syna[cite: 2944, 2946].",
-                "[cite_start]Zła kobieta posuwa się do tego, że podaje Yamanowi truciznę niszczącą jego wątrobę[cite: 2695].",
-                "[cite_start]Dzięki nagraniom od Seher intryga wychodzi na jaw, a Yaman zamyka matkę w kotłowni[cite: 2371, 2372].",
-                "[cite_start]Jakiś czas później Canan ginie w wyniku szamotaniny z Keremem[cite: 2349]."
+                { text: "Po postrzeleniu Yamana, zdesperowana Seher ucieka z Yusufem i żyją w biedzie, walcząc o przetrwanie.", episodes: [282, 285] },
+                { text: "Yaman ich odnajduje i zmusza do powrotu, jednak Seher nienawidzi go, myśląc, że jest mordercą jej siostry.", episodes: [289, 304] },
+                { text: "Wkrótce wychodzi na jaw, że Yaman jest niewinny, a za śmierć Kevser odpowiada Ikbal oraz sfałszowany przez lekarkę raport.", episodes: [310, 312] },
+                { text: "W życiu Yamana pojawia się jego matka, Canan, która potajemnie współpracuje z lekarzem i fałszuje historię swojej choroby, by wzbudzić litość i przejąć majątek syna.", episodes: [333, 347] },
+                { text: "Zła kobieta posuwa się do tego, że podaje Yamanowi truciznę niszczącą jego wątrobę.", episodes: [385, 389] },
+                { text: "Dzięki nagraniom od Seher intryga wychodzi na jaw, a Yaman zamyka matkę w kotłowni.", episodes: [436, 436] },
+                { text: "Jakiś czas później Canan ginie w wyniku szamotaniny z Keremem.", episodes: [444, 444] }
             ]
         },
         {
             title: "Faza 2: Utrata pamięci, nowi wrogowie i tragiczny finał Seher",
             events: [
-                "[cite_start]Zuhal po wielu okrutnych intrygach ginie, spadając ze schodów z nożem wbitym w pierś podczas ostatecznej próby zamordowania Seher i Yamana[cite: 1973, 1976].",
-                "[cite_start]Seher traci pamięć, a w jej odzyskaniu pomaga jej doktor Aziz, który wkrótce okazuje się bratem nowego, potężnego wroga Yamana – Idrisa[cite: 1960, 2007].",
-                "[cite_start]Mimo przeciwności, Seher i Yaman zbliżają się do siebie na nowo i planują wziąć podwójny ślub razem z Ziyą i Çicek[cite: 1800].",
-                "[cite_start]Idris swoimi manipulacjami doprowadza do śmierci Aziza i o mały włos nie niszczy rodziny Kyrymly[cite: 1794, 1795, 1796].",
-                "[cite_start]Sielanka nie trwa długo, gdyż Nedim przynosi Yamanowi tragiczne wieści o Seher, co brutalnie kończy jej wątek w serialu[cite: 1797]."
+                { text: "Zuhal po wielu okrutnych intrygach ginie, spadając ze schodów z nożem wbitym w pierś podczas ostatecznej próby zamordowania Seher i Yamana.", episodes: [537, 537] },
+                { text: "Seher traci pamięć, a w jej odzyskaniu pomaga jej doktor Aziz, który wkrótce okazuje się bratem nowego, potężnego wroga Yamana – Idrisa.", episodes: [475, 559] },
+                { text: "Mimo przeciwności, Seher i Yaman zbliżają się do siebie na nowo i planują wziąć podwójny ślub razem z Ziyą i Çicek.", episodes: [561, 564] },
+                { text: "Idris swoimi manipulacjami doprowadza do śmierci Aziza i o mały włos nie niszczy rodziny Kyrymly.", episodes: [565, 565] },
+                { text: "Sielanka nie trwa długo, gdyż Nedim przynosi Yamanowi tragiczne wieści o Seher, co brutalnie kończy jej wątek w serialu.", episodes: [565, 565] }
             ]
         },
         {
             title: "Faza 3: Pojawienie się Nany, zemsta i zdrada Nedima",
             events: [
-                "[cite_start]Trzy miesiące po dramatycznych wydarzeniach Yusuf, z powodu traumy, przestaje mówić[cite: 1786].",
-                "[cite_start]W rezydencji pojawia się Nana, siostra Aziza, która w tajemnicy pragnie pomścić brata, wierząc, że zabił go Yaman[cite: 1785, 1787].",
-                "[cite_start]Nana zostaje guwernantką Yusufa, dzięki czemu chłopiec powoli odzyskuje mowę[cite: 1752, 1778].",
-                "[cite_start]Kobieta waha się przed zabiciem Yamana, a z czasem dowiaduje się od Halita, że prawdziwym mordercą jej brata był Idris[cite: 1247, 1248, 1749].",
-                "[cite_start]Podczas ostatecznego starcia z Yamanem, Idris ginie pod kołami samochodu[cite: 1149].",
-                "[cite_start]Nedim z powodu chorobliwej miłości do Nany zdradza Yamana i aranżuje wybuch jego samochodu[cite: 820, 823, 824].",
-                "[cite_start]Yaman jednak przeżywa ten zamach i działa w ukryciu[cite: 804, 812].",
-                "[cite_start]Gdy Nedim porywa Nanę i szantażuje Yamana, ostatecznie traci równowagę i spada w przepaść[cite: 308, 309].",
-                "[cite_start]Nana i Yaman wyznają sobie miłość i oficjalnie się zaręczają[cite: 139, 154]."
+                { text: "Trzy miesiące po dramatycznych wydarzeniach Yusuf, z powodu traumy, przestaje mówić.", episodes: [566, 566] },
+                { text: "W rezydencji pojawia się Nana, siostra Aziza, która w tajemnicy pragnie pomścić brata, wierząc, że zabił go Yaman.", episodes: [566, 566] },
+                { text: "Nana zostaje guwernantką Yusufa, dzięki czemu chłopiec powoli odzyskuje mowę.", episodes: [571, 571] },
+                { text: "Kobieta waha się przed zabiciem Yamana, a z czasem dowiaduje się od Halita, że prawdziwym mordercą her brata był Idris.", episodes: [574, 640] },
+                { text: "Podczas ostatecznego starcia z Yamanem, Idris ginie pod kołami samochodu.", episodes: [654, 654] },
+                { text: "Nedim z powodu chorobliwej miłości do Nany zdradza Yamana, próbuje go wrobić i ostatecznie aranżuje wybuch jego samochodu.", episodes: [712, 712] },
+                { text: "Yaman jednak przeżywa ten zamach i działa w ukryciu.", episodes: [714, 714] },
+                { text: "Gdy Nedim porywa Nanę i szantażuje Yamana, ostatecznie traci równowagę i spada w przepaść.", episodes: [802, 802] },
+                { text: "Nana i Yaman wyznają sobie miłość i oficjalnie się zaręczają.", episodes: [827, 830] }
             ]
         },
         {
             title: "Faza 4: Wątek komisarzy i nadejście \"Trucizny\"",
             events: [
-                "[cite_start]W międzyczasie komisarz Ali, po zawirowaniach związanych z ucieczką Duygu (spowodowaną jej bezpłodnością), odnajduje ją i wybacza jej kłamstwa[cite: 1506, 1511, 1831].",
-                "[cite_start]Wątek Alego na komendzie przejmuje tajemniczy komisarz Ercan, który okazuje się działającym pod przykrywką Feritem[cite: 1488].",
-                "[cite_start]Miejsce Duygu zajmuje Ayse, która w przeszłości była żoną Ferita[cite: 1490, 1491].",
-                "[cite_start]Ferit próbuje odzyskać Ayse, nie wiedząc początkowo, że wychowywana przez nią Doga jest jego biologiczną córką[cite: 730, 1473].",
-                "[cite_start]Obecny mąż Ayse, Koray, stale knuje intrygi i fałszuje wyniki testów DNA, aby prawda nie wyszła na jaw[cite: 427, 428, 640].",
-                "[cite_start]W głównym wątku pojawia się potężny i bezwzględny wróg – Trucizna (ukrywający się początkowo pod tożsamością biznesmena Acara Tuncy), który atakuje rezydencję i sprawia, że Yusuf znika[cite: 36, 37, 130].",
-                "[cite_start]Sześć miesięcy później Nana i Yusuf żyją w skrajnej biedzie na ulicy, a Trucizna wysyła ich tropem płatnego mordercę[cite: 10, 11, 13].",
-                "[cite_start]Zdesperowany Yaman współpracuje z policją i śledzi uciekającego Truciznę, by wreszcie odzyskać bratanka[cite: 16]."
+                { text: "W międzyczasie komisarz Ali, po zawirowaniach związanych z ucieczką Duygu (spowodowaną diagnozą o bezpłodności), odnajduje ją i wybacza jej kłamstwa.", episodes: [565, 605] },
+                { text: "Wątek Alego na komendzie przejmuje tajemniczy komisarz Ercan, który okazuje się działającym pod przykrywką Feritem.", episodes: [608, 608] },
+                { text: "Miejsce Duygu zajmuje Ayse, która w przeszłości była żoną Ferita.", episodes: [608, 608] },
+                { text: "Ferit próbuje odzyskać Ayse, nie wiedząc początkowo, że wychowywana przez nią Doga jest jego biologiczną córką.", episodes: [610, 613] },
+                { text: "Obecny mąż Ayse, Koray, stale knuje intrygi i fałszuje wyniki testów DNA, aby prawda nie wyszła na jaw.", episodes: [613, 780] },
+                { text: "W głównym wątku pojawia się potężny i bezwzględny wróg – Trucizna, ukrywający się pod tożsamością biznesmena Acara Tuncy, który atakuje rezydencję i sprawia, że Yusuf znika.", episodes: [831, 853] },
+                { text: "Sześć miesięcy później Nana i Yusuf żyją w skrajnej biedzie na ulicy, a Trucizna wysyła ich tropem płatnego mordercę.", episodes: [863, 864] },
+                { text: "Zdesperowany Yaman współpracuje z policją i śledzi uciekającego Truciznę, by wreszcie odzyskać bratanka.", episodes: [861, 861] }
             ]
         }
     ];
 
     const timelineContainer = document.getElementById('timeline-container');
+    const episodeTimeline = document.getElementById('episode-timeline');
+    let timelineTimeout;
 
-    // Function to clean the text from AI citation artifacts [cite_start] and [cite: ...]
-    function cleanText(text) {
-        return text.replace(/\[cite_start\]/g, "")
-                   .replace(/\[cite:\s*[\d,\s]+\]/g, "");
-    }
+    // Generate Full List of Episodes in the Right Sidebar
+    const minEp = 282;
+    const maxEp = 865;
+
+    // Static generation removed as markers are now dynamic on hover
 
     // Generate HTML for the timeline
     phasesData.forEach((phase, index) => {
-        // Create Phase Section
         const phaseSection = document.createElement('section');
         phaseSection.className = 'phase-section animate-hidden-right';
         phaseSection.style.transitionDelay = `${index * 0.1}s`;
 
-        // Create Phase Header
         const phaseHeader = document.createElement('div');
         phaseHeader.className = 'phase-header';
-        
+
         const phaseTitle = document.createElement('h2');
         phaseTitle.className = 'phase-title';
         phaseTitle.textContent = phase.title;
-        
+
         phaseHeader.appendChild(phaseTitle);
         phaseSection.appendChild(phaseHeader);
 
-        // Create Events Grid
         const eventsGrid = document.createElement('div');
         eventsGrid.className = 'events-grid';
 
-        phase.events.forEach((eventRaw, evIndex) => {
-            const cleanMessage = cleanText(eventRaw);
-            
+        phase.events.forEach((event, evIndex) => {
             const eventCard = document.createElement('div');
             eventCard.className = 'event-card animate-hidden-up';
-            // Slight staggering
             eventCard.style.transitionDelay = `${evIndex * 0.05}s`;
-            
+
             const eventText = document.createElement('p');
             eventText.className = 'event-text';
-            eventText.textContent = cleanMessage;
+            eventText.textContent = event.text;
 
             eventCard.appendChild(eventText);
+
+            // Interaction: Dynamic marker generation with crossfade
+            let groupElement = null;
+
+            const showTimeline = () => {
+                clearTimeout(timelineTimeout);
+                
+                // Fade out existing groups from other cards
+                const existingGroups = episodeTimeline.querySelectorAll('.marker-group');
+                existingGroups.forEach(group => {
+                    if (group !== groupElement) {
+                        group.classList.remove('visible');
+                        setTimeout(() => group.remove(), 800);
+                    }
+                });
+
+                // If our group is already there, just ensure it fades in
+                if (groupElement && episodeTimeline.contains(groupElement)) {
+                    groupElement.classList.add('visible');
+                    return;
+                }
+
+                // Create new group wrapper for this specific event
+                groupElement = document.createElement('div');
+                groupElement.className = 'marker-group';
+
+                for (let i = event.episodes[0]; i <= event.episodes[1]; i++) {
+                    const epMarker = document.createElement('div');
+                    epMarker.className = 'ep-marker glowing';
+                    epMarker.textContent = i;
+                    groupElement.appendChild(epMarker);
+                }
+
+                episodeTimeline.appendChild(groupElement);
+                
+                // Force a browser reflow
+                void groupElement.offsetWidth;
+                groupElement.classList.add('visible');
+            };
+
+            const hideTimeline = () => {
+                if (groupElement) {
+                    groupElement.classList.remove('visible');
+                }
+                
+                timelineTimeout = setTimeout(() => {
+                    episodeTimeline.innerHTML = '';
+                    groupElement = null;
+                }, 800);
+            };
+
+            eventCard.addEventListener('mouseenter', showTimeline);
+            eventCard.addEventListener('mouseleave', hideTimeline);
+
+            // Toggle for touch screens
+            eventCard.addEventListener('click', () => {
+                if (groupElement && groupElement.classList.contains('visible')) {
+                    hideTimeline();
+                } else {
+                    showTimeline();
+                }
+            });
+
             eventsGrid.appendChild(eventCard);
         });
 
@@ -103,10 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
         timelineContainer.appendChild(phaseSection);
     });
 
-    // Intersection Observer for scroll animations
     const observerOptions = {
-        root: null,
-        rootMargin: '0px',
         threshold: 0.15
     };
 
@@ -114,13 +170,10 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('animate-visible');
-                // Optional: unobserve after animating once
                 observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    // Observe all animate-hidden elements
-    const elementsToAnimate = document.querySelectorAll('.animate-hidden-up, .animate-hidden-right');
-    elementsToAnimate.forEach(el => scrollObserver.observe(el));
+    document.querySelectorAll('.animate-hidden-up, .animate-hidden-right').forEach(el => scrollObserver.observe(el));
 });
