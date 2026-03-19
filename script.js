@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
             title: "Faza 1: Ucieczka, poszukiwanie prawdy i intrygi Canan",
             events: [
                 { text: "Po postrzeleniu Yamana, zdesperowana Seher ucieka z Yusufem i żyją w biedzie, walcząc o przetrwanie.", episodes: [282, 285] },
-                { text: "Yaman ich odnajduje i zmusza do powrotu, jednak Seher nienawidzi go, myśląc, że jest mordercą jej siostry.", episodes: [289, 304] },
+                { text: "Yaman ich odnajduje i zmusza do powrotu, jednak Seher nienawidzi go, myśląc, że jest mordercą her siostry.", episodes: [289, 304] },
                 { text: "Wkrótce wychodzi na jaw, że Yaman jest niewinny, a za śmierć Kevser odpowiada Ikbal oraz sfałszowany przez lekarkę raport.", episodes: [310, 312] },
                 { text: "W życiu Yamana pojawia się jego matka, Canan, która potajemnie współpracuje z lekarzem i fałszuje historię swojej choroby, by wzbudzić litość i przejąć majątek syna.", episodes: [333, 347] },
                 { text: "Zła kobieta posuwa się do tego, że podaje Yamanowi truciznę niszczącą jego wątrobę.", episodes: [385, 389] },

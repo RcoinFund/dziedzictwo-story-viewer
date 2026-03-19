@@ -93,12 +93,12 @@ body {
 
 .container {
     position: relative;
-    /* Anchor for absolute timeline */
-    max-width: 900px;
+    width: 100%;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 4rem 2rem;
-    padding-right: 120px;
-    /* Space for the episode timeline */
+    padding: clamp(2rem, 5vw, 5rem) clamp(1rem, 3vw, 2rem);
+    padding-right: 100px; /* Base padding for sidebar */
+    transition: padding 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Header */
@@ -109,22 +109,24 @@ header {
 
 header h1 {
     font-family: var(--font-heading);
-    font-size: 4.5rem;
+    font-size: clamp(2.2rem, 10vw, 4.5rem);
     font-weight: 700;
     letter-spacing: 2px;
     background: linear-gradient(to right, #fff, #eca1a1);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 1rem;
     text-shadow: 0 10px 30px rgba(225, 29, 72, 0.3);
 }
 
 header .subtitle {
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 3vw, 1.25rem);
     color: var(--text-muted);
     font-weight: 300;
     max-width: 600px;
     margin: 0 auto;
+    opacity: 0.9;
 }
 
 .divider {
@@ -175,7 +177,7 @@ header .subtitle {
 
 .phase-title {
     font-family: var(--font-heading);
-    font-size: 2.2rem;
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
     color: var(--text-main);
     font-weight: 400;
     display: inline-block;
@@ -224,9 +226,10 @@ header .subtitle {
 }
 
 .event-text {
-    font-size: 1.05rem;
+    font-size: clamp(0.95rem, 2.5vw, 1.1rem);
     color: rgba(255, 255, 255, 0.85);
     letter-spacing: 0.3px;
+    font-weight: 300;
 }
 
 /* Animations (Intersection Observer targets classes) */
@@ -323,20 +326,47 @@ footer {
 }
 
 /* Responsiveness */
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
     .container {
-        padding-right: 2rem;
+        padding-right: 80px;
+    }
+    
+    #episode-timeline {
+        right: 1.5rem;
+        width: 50px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .container {
+        padding-right: 70px;
+        max-width: 800px;
     }
 
     #episode-timeline {
-        display: none;
-        /* Hide sidebar on small screens to avoid clutter */
+        right: 1rem;
+        width: 45px;
+    }
+}
+
+@media (max-width: 850px) {
+    .container {
+        padding-right: 60px;
+    }
+    
+    .ep-marker {
+        font-size: 0.75rem;
     }
 }
 
 @media (max-width: 768px) {
-    header h1 {
-        font-size: 3rem;
+    .container {
+        padding: 3rem 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    #episode-timeline {
+        display: none;
     }
 
     .phase-section {
@@ -349,13 +379,27 @@ footer {
     }
 
     .phase-title {
-        font-size: 1.8rem;
         text-align: center;
         display: block;
+        margin-bottom: 1rem;
     }
 
     .phase-header {
         border-bottom: 2px solid var(--accent-color);
-        padding-bottom: 1rem;
+        padding-bottom: 0.5rem;
+    }
+
+    .event-card {
+        padding: 1.25rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        letter-spacing: 1px;
+    }
+    
+    .container {
+        padding: 2rem 1rem;
     }
 }
