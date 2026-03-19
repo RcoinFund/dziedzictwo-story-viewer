@@ -4,7 +4,8 @@
     --card-border: rgba(255, 255, 255, 0.08);
     --text-main: #f3f4f6;
     --text-muted: #9ca3af;
-    --accent-color: #e11d48; /* Crimson red for dramatic feel */
+    --accent-color: #e11d48;
+    /* Crimson red for dramatic feel */
     --accent-glow: rgba(225, 29, 72, 0.5);
     --font-heading: 'Playfair Display', serif;
     --font-body: 'Inter', sans-serif;
@@ -48,7 +49,8 @@ body {
 .orb-1 {
     width: 40vw;
     height: 40vw;
-    background: rgba(225, 29, 72, 0.15); /* Soft crimson */
+    background: rgba(225, 29, 72, 0.15);
+    /* Soft crimson */
     top: -10%;
     left: -10%;
 }
@@ -56,7 +58,8 @@ body {
 .orb-2 {
     width: 50vw;
     height: 50vw;
-    background: rgba(88, 28, 135, 0.15); /* Deep purple */
+    background: rgba(88, 28, 135, 0.15);
+    /* Deep purple */
     bottom: -20%;
     right: -10%;
     animation-delay: -5s;
@@ -65,29 +68,37 @@ body {
 .orb-3 {
     width: 30vw;
     height: 30vw;
-    background: rgba(185, 28, 28, 0.1); 
+    background: rgba(185, 28, 28, 0.1);
     top: 40%;
     left: 50%;
     animation-duration: 25s;
 }
 
 @keyframes float {
-    0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(5%, 10%) scale(1.1); }
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(5%, 10%) scale(1.1);
+    }
 }
 
 /* Layout Container */
-html, body {
+html,
+body {
     height: 100%;
     overflow-x: hidden;
 }
 
 .container {
-    position: relative; /* Anchor for absolute timeline */
+    position: relative;
+    /* Anchor for absolute timeline */
     max-width: 900px;
     margin: 0 auto;
     padding: 4rem 2rem;
-    padding-right: 120px; /* Space for the episode timeline */
+    padding-right: 120px;
+    /* Space for the episode timeline */
 }
 
 /* Header */
@@ -102,7 +113,6 @@ header h1 {
     font-weight: 700;
     letter-spacing: 2px;
     background: linear-gradient(to right, #fff, #eca1a1);
-    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 1rem;
@@ -144,7 +154,8 @@ header .subtitle {
 .phase-header::before {
     content: '';
     position: absolute;
-    left: -3rem; /* Align with border-left */
+    left: -3rem;
+    /* Align with border-left */
     top: 50%;
     transform: translate(-50%, -50%);
     width: 20px;
@@ -240,10 +251,17 @@ header .subtitle {
 .fade-in {
     animation: fadeIn 1s ease-out forwards;
 }
-.delays-1 { animation-delay: 0.3s; opacity: 0; }
+
+.delays-1 {
+    animation-delay: 0.3s;
+    opacity: 0;
+}
 
 @keyframes fadeIn {
-    to { opacity: 1; transform: translateY(0); }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Footer */
@@ -257,61 +275,51 @@ footer {
 }
 
 /* Episode Timeline Side (No internal scroll) */
+/* Episode Timeline Side (Dynamic) */
 #episode-timeline {
-    position: absolute;
-    right: 1.5rem;
-    top: 350px; /* Aligned closer to header end */
-    bottom: 80px; /* End right at the footer top */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-end;
-    padding: 0 10px;
+    position: fixed;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 70vh;
+    width: 60px;
     z-index: 100;
     pointer-events: none;
 }
 
-#episode-timeline::-webkit-scrollbar {
-    display: none; /* Removed scrollbar */
+.marker-group {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.marker-group.visible {
+    opacity: 1;
 }
 
 .ep-marker {
-    font-size: 0.8rem; /* Larger font as requested */
+    font-size: 0.85rem;
     color: var(--text-muted);
-    opacity: 0.5; /* Even more visible */
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    cursor: default;
+    opacity: 0.6;
+    transition: all 0.3s ease;
     white-space: nowrap;
-    font-family: var(--font-body);
-    width: 65px;
     text-align: right;
-}
-
-.ep-marker.highlighted {
-    opacity: 0.5;
-    color: #fff;
-    font-weight: 500;
+    font-family: var(--font-body);
 }
 
 .ep-marker.glowing {
     color: #fff !important;
     opacity: 1 !important;
-    text-shadow: 0 0 15px var(--accent-color), 0 0 30px var(--accent-color);
-    transform: scale(1.15); /* Reduced scale to prevent clipping */
-    font-weight: 800;
-}
-
-/* Episode Tag on Cards */
-.ep-tag {
-    display: inline-block;
-    background: var(--accent-color);
-    color: #fff;
-    font-size: 0.75rem;
-    padding: 2px 8px;
-    border-radius: 4px;
-    margin-bottom: 0.75rem;
-    font-weight: 600;
-    box-shadow: 0 0 10px var(--accent-glow);
+    text-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
+    transform: scale(1.1);
+    font-weight: 700;
 }
 
 /* Responsiveness */
@@ -319,15 +327,35 @@ footer {
     .container {
         padding-right: 2rem;
     }
+
     #episode-timeline {
-        display: none; /* Hide sidebar on small screens to avoid clutter */
+        display: none;
+        /* Hide sidebar on small screens to avoid clutter */
     }
 }
 
 @media (max-width: 768px) {
-    header h1 { font-size: 3rem; }
-    .phase-section { border-left: none; padding-left: 0; }
-    .phase-header::before { display: none; }
-    .phase-title { font-size: 1.8rem; text-align: center; display: block; }
-    .phase-header { border-bottom: 2px solid var(--accent-color); padding-bottom: 1rem; }
+    header h1 {
+        font-size: 3rem;
+    }
+
+    .phase-section {
+        border-left: none;
+        padding-left: 0;
+    }
+
+    .phase-header::before {
+        display: none;
+    }
+
+    .phase-title {
+        font-size: 1.8rem;
+        text-align: center;
+        display: block;
+    }
+
+    .phase-header {
+        border-bottom: 2px solid var(--accent-color);
+        padding-bottom: 1rem;
+    }
 }

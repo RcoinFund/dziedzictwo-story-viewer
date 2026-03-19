@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     // The data mapping events to episode numbers
     const phasesData = [
         {
@@ -55,29 +55,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const timelineContainer = document.getElementById('timeline-container');
     const episodeTimeline = document.getElementById('episode-timeline');
+    let timelineTimeout;
 
     // Generate Full List of Episodes in the Right Sidebar
     const minEp = 282;
     const maxEp = 865;
-    
-    // Use a Set to store only the start and end of each range
-    const boundaryEpisodes = new Set();
-    phasesData.forEach(p => p.events.forEach(e => {
-        boundaryEpisodes.add(e.episodes[0]);
-        boundaryEpisodes.add(e.episodes[1]);
-    }));
 
-    // Convert Set to sorted array
-    const sortedBoundaries = Array.from(boundaryEpisodes).sort((a, b) => a - b);
-
-    // Create side timeline with only boundary episodes
-    sortedBoundaries.forEach(ep => {
-        const epMarker = document.createElement('div');
-        epMarker.className = 'ep-marker highlighted';
-        epMarker.id = `ep-${ep}`;
-        epMarker.textContent = ep;
-        episodeTimeline.appendChild(epMarker);
-    });
+    // Static generation removed as markers are now dynamic on hover
 
     // Generate HTML for the timeline
     phasesData.forEach((phase, index) => {
@@ -87,11 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const phaseHeader = document.createElement('div');
         phaseHeader.className = 'phase-header';
-        
+
         const phaseTitle = document.createElement('h2');
         phaseTitle.className = 'phase-title';
         phaseTitle.textContent = phase.title;
-        
+
         phaseHeader.appendChild(phaseTitle);
         phaseSection.appendChild(phaseHeader);
 
@@ -102,32 +86,72 @@ document.addEventListener('DOMContentLoaded', () => {
             const eventCard = document.createElement('div');
             eventCard.className = 'event-card animate-hidden-up';
             eventCard.style.transitionDelay = `${evIndex * 0.05}s`;
-            
+
             const eventText = document.createElement('p');
             eventText.className = 'event-text';
             eventText.textContent = event.text;
 
-            const epTag = document.createElement('span');
-            epTag.className = 'ep-tag';
-            epTag.textContent = event.episodes[0] === event.episodes[1] ? 
-                `Odc. ${event.episodes[0]}` : 
-                `Odc. ${event.episodes[0]}-${event.episodes[1]}`;
-
-            eventCard.appendChild(epTag);
             eventCard.appendChild(eventText);
-            
-            // Interaction: Hover over card highlights markers
-            eventCard.addEventListener('mouseenter', () => {
-                for (let i = event.episodes[0]; i <= event.episodes[1]; i++) {
-                    const marker = document.getElementById(`ep-${i}`);
-                    if (marker) marker.classList.add('glowing');
-                }
-            });
 
-            eventCard.addEventListener('mouseleave', () => {
+            // Interaction: Dynamic marker generation with crossfade
+            let groupElement = null;
+
+            const showTimeline = () => {
+                clearTimeout(timelineTimeout);
+                
+                // Fade out existing groups from other cards
+                const existingGroups = episodeTimeline.querySelectorAll('.marker-group');
+                existingGroups.forEach(group => {
+                    if (group !== groupElement) {
+                        group.classList.remove('visible');
+                        setTimeout(() => group.remove(), 800);
+                    }
+                });
+
+                // If our group is already there, just ensure it fades in
+                if (groupElement && episodeTimeline.contains(groupElement)) {
+                    groupElement.classList.add('visible');
+                    return;
+                }
+
+                // Create new group wrapper for this specific event
+                groupElement = document.createElement('div');
+                groupElement.className = 'marker-group';
+
                 for (let i = event.episodes[0]; i <= event.episodes[1]; i++) {
-                    const marker = document.getElementById(`ep-${i}`);
-                    if (marker) marker.classList.remove('glowing');
+                    const epMarker = document.createElement('div');
+                    epMarker.className = 'ep-marker glowing';
+                    epMarker.textContent = i;
+                    groupElement.appendChild(epMarker);
+                }
+
+                episodeTimeline.appendChild(groupElement);
+                
+                // Force a browser reflow
+                void groupElement.offsetWidth;
+                groupElement.classList.add('visible');
+            };
+
+            const hideTimeline = () => {
+                if (groupElement) {
+                    groupElement.classList.remove('visible');
+                }
+                
+                timelineTimeout = setTimeout(() => {
+                    episodeTimeline.innerHTML = '';
+                    groupElement = null;
+                }, 800);
+            };
+
+            eventCard.addEventListener('mouseenter', showTimeline);
+            eventCard.addEventListener('mouseleave', hideTimeline);
+
+            // Toggle for touch screens
+            eventCard.addEventListener('click', () => {
+                if (groupElement && groupElement.classList.contains('visible')) {
+                    hideTimeline();
+                } else {
+                    showTimeline();
                 }
             });
 
