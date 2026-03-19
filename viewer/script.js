@@ -60,24 +60,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const minEp = 282;
     const maxEp = 865;
     
-    const usedEpisodes = new Set();
+    // Use a Set to store only the start and end of each range
+    const boundaryEpisodes = new Set();
     phasesData.forEach(p => p.events.forEach(e => {
-        for (let i = e.episodes[0]; i <= e.episodes[1]; i++) {
-            usedEpisodes.add(i);
-        }
+        boundaryEpisodes.add(e.episodes[0]);
+        boundaryEpisodes.add(e.episodes[1]);
     }));
 
-    for (let ep = minEp; ep <= maxEp; ep++) {
-        // Show markers for every 10 episodes, or if it's a mentioned episode
-        if (ep % 10 === 0 || usedEpisodes.has(ep)) {
-            const epMarker = document.createElement('div');
-            epMarker.className = 'ep-marker';
-            if (usedEpisodes.has(ep)) epMarker.classList.add('highlighted');
-            epMarker.id = `ep-${ep}`;
-            epMarker.textContent = ep;
-            episodeTimeline.appendChild(epMarker);
-        }
-    }
+    // Convert Set to sorted array
+    const sortedBoundaries = Array.from(boundaryEpisodes).sort((a, b) => a - b);
+
+    // Create side timeline with only boundary episodes
+    sortedBoundaries.forEach(ep => {
+        const epMarker = document.createElement('div');
+        epMarker.className = 'ep-marker highlighted';
+        epMarker.id = `ep-${ep}`;
+        epMarker.textContent = ep;
+        episodeTimeline.appendChild(epMarker);
+    });
 
     // Generate HTML for the timeline
     phasesData.forEach((phase, index) => {

@@ -102,6 +102,7 @@ header h1 {
     font-weight: 700;
     letter-spacing: 2px;
     background: linear-gradient(to right, #fff, #eca1a1);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 1rem;
@@ -259,15 +260,15 @@ footer {
 #episode-timeline {
     position: absolute;
     right: 1.5rem;
-    top: 400px; /* Start below header */
-    bottom: 200px; /* End above footer */
+    top: 350px; /* Aligned closer to header end */
+    bottom: 80px; /* End right at the footer top */
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Spread them out */
+    justify-content: space-between;
     align-items: flex-end;
     padding: 0 10px;
     z-index: 100;
-    pointer-events: none; /* Let clicks pass through if needed */
+    pointer-events: none;
 }
 
 #episode-timeline::-webkit-scrollbar {
@@ -275,14 +276,14 @@ footer {
 }
 
 .ep-marker {
-    font-size: 0.65rem;
+    font-size: 0.8rem; /* Larger font as requested */
     color: var(--text-muted);
-    opacity: 0.25;
+    opacity: 0.5; /* Even more visible */
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: default;
     white-space: nowrap;
     font-family: var(--font-body);
-    width: 50px;
+    width: 65px;
     text-align: right;
 }
 
